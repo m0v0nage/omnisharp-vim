@@ -1,0 +1,54 @@
+== TODO ==
+
+This is a big project and I guess it will take many hours to complete and I need to define goals to keep myself motivated.
+
+- [o] get OmniSharp-Roslyn to build on Arch Linux:
+    - [X] Report to slack
+    - [ ] Implement solution
+- [X] Setup Python env scripts
+- [ ] Pylint setup:
+    - [ ] support python3 only?
+- [ ] Logging setup:
+    - [ ] Setup logging infrastructure
+- [ ] setup communication via STDIO
+- [ ] building
+- [ ] testing
+- [ ] find_type
+- [ ] find_symbol
+- [ ] find_usages
+
+## Functions from the old python file
+
+- [ ] getResponse
+- [ ] findUsages
+- [ ] findMembers
+- [ ] findImplementations
+- [ ] gotoDefinition
+- [ ] openFile
+- [ ] getCodeActions
+- [ ] runCodeAction
+- [ ] codeActionParameters
+- [ ] setBufferText
+- [ ] fixCodeIssue
+- [ ] getCodeIssues
+- [ ] codeCheck
+- [ ] typeLookup
+- [ ] renameTo
+- [ ] setBuffer
+- [ ] build
+- [ ] buildcommand
+- [ ] getTestCommand
+- [ ] codeFormat
+- [ ] fix_usings
+- [ ] addReference
+- [ ] findSyntaxErrors
+- [ ] findSemanticErrors
+- [ ] findTypes
+- [ ] findSymbols
+- [ ] get_quickfix_list
+- [ ] quickfixes_from_js
+- [ ] quickfixes_from_response
+- [ ] lookupAllUserTypes
+- [ ] navigateUp
+- [ ] navigateDown
+- [ ] get_navigate_response
