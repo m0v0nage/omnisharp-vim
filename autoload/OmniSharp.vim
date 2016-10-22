@@ -526,29 +526,41 @@ function! OmniSharp#StartServerSolution(solutionPath) abort
   endif
   let g:OmniSharp_running_slns += [solutionPath]
   let port = exists('b:OmniSharp_port') ? b:OmniSharp_port : g:OmniSharp_port
-  let command = shellescape(g:OmniSharp_server_path, 1)
-  \ . ' -p ' . port
-  \ . ' -s ' . shellescape(solutionPath, 1)
+
+  let command = [
+              \ shellescape(g:OmniSharp_server_path, 1),
+              \ '-p', port,
+              \ '-s', shellescape(solutionPath, 1)]
   if g:OmniSharp_server_type !=# 'roslyn'
-    let command .= OmniSharp#ResolveLocalConfig(solutionPath)
+    call add(command, OmniSharp#ResolveLocalConfig(solutionPath))
   endif
+
   if !has('win32') && !has('win32unix') && g:OmniSharp_server_type !=# 'roslyn'
-    let command = 'mono ' . command
+    call insert(command, 'mono')
   endif
+
   call OmniSharp#RunAsyncCommand(command)
 endfunction
 
+""
+" Run a command assinchronously.
 function! OmniSharp#RunAsyncCommand(command) abort
   let is_vimproc = 0
+  let command = a:command
   silent! let is_vimproc = vimproc#version()
-  if exists(':Dispatch') == 2
-    call dispatch#start(a:command, {'background': 1})
-  else
-    if is_vimproc
-      call vimproc#system_gui(substitute(a:command, '\\', '\/', 'g'))
-    else
-      echoerr 'Please install either vim-dispatch or vimproc plugin to use this feature'
+  if has('nvim')
+    if has('unix')
+      let command = extend(['sh', '-c'], command)
     endif
+    echom "DEBUG: Using neovim Job control to start the server"
+    echom "DEBUG: " . join(command, ' ')
+    let g:OmniSharp_server_job = jobstart(command)
+  elseif exists(':Dispatch') == 2
+    call dispatch#start(join(command, ' '), {'background': 1})
+  elseif is_vimproc
+    call vimproc#system_gui(substitute(join(command, ' '), '\\', '\/', 'g'))
+  else
+    echoerr 'Please use Neovim or install either vim-dispatch or vimproc plugin to use this feature'
   endif
 endfunction
 
