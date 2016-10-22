@@ -1,5 +1,12 @@
-import vim, urllib2, urllib, urlparse, logging, json, os, os.path, cgi, types, threading
-import asyncrequest
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+
+import urllib2
+import urlparse
+import logging
+import json
+import os
+import vim
 
 logger = logging.getLogger('omnisharp')
 logger.setLevel(logging.WARNING)
@@ -20,10 +27,10 @@ def getResponse(endPoint, additional_parameters=None, timeout=None):
     parameters['column'] = vim.eval('col(".")')
     parameters['buffer'] = '\r\n'.join(vim.eval("getline(1,'$')")[:])
     parameters['filename'] = vim.current.buffer.name
-    if additional_parameters != None:
+    if additional_parameters is not None:
         parameters.update(additional_parameters)
 
-    if timeout == None:
+    if timeout is None:
         timeout = int(vim.eval('g:OmniSharp_timeout'))
 
     host = vim.eval('g:OmniSharp_host')
@@ -59,7 +66,7 @@ def findMembers():
     parameters = {}
     parameters['MaxWidth'] = int(vim.eval('g:OmniSharp_quickFixLength'))
     js = getResponse('/currentfilemembersasflat', parameters)
-    return quickfixes_from_response(json.loads(js));
+    return quickfixes_from_response(json.loads(js))
 
 def findImplementations():
     parameters = {}
@@ -68,10 +75,10 @@ def findImplementations():
     return get_quickfix_list(js, 'QuickFixes')
 
 def gotoDefinition():
-    js = getResponse('/gotodefinition');
-    if(js != ''):
+    js = getResponse('/gotodefinition')
+    if js != '':
         definition = json.loads(js)
-        if(definition['FileName'] != None):
+        if definition['FileName'] is not None:
             openFile(definition['FileName'].replace("'","''"), definition['Line'], definition['Column'])
         else:
             print "Not found"
@@ -90,7 +97,7 @@ def getCodeActions(mode):
 def runCodeAction(mode, action):
     parameters = codeActionParameters(mode)
     parameters['codeaction'] = action
-    js = getResponse('/runcodeaction', parameters);
+    js = getResponse('/runcodeaction', parameters)
     text = json.loads(js)['Text']
     setBufferText(text)
     return True
@@ -107,7 +114,7 @@ def codeActionParameters(mode):
     return parameters
 
 def setBufferText(text):
-    if text == None:
+    if text is None:
         return
     lines = text.splitlines()
 
@@ -117,7 +124,7 @@ def setBufferText(text):
     vim.current.window.cursor = cursor
 
 def fixCodeIssue():
-    js = getResponse('/fixcodeissue');
+    js = getResponse('/fixcodeissue')
     text = json.loads(js)['Text']
     setBufferText(text)
 
@@ -132,15 +139,15 @@ def codeCheck():
 def typeLookup(ret):
     parameters = {}
     parameters['includeDocumentation'] = vim.eval('a:includeDocumentation')
-    js = getResponse('/typelookup', parameters);
+    js = getResponse('/typelookup', parameters)
     if js != '':
         response = json.loads(js)
         type = response['Type']
         documentation = response['Documentation']
-        if(documentation == None):
+        if documentation is None:
             documentation = ''
-        if(type != None):
-            vim.command("let %s = '%s'" % (ret, type)) 
+        if type is not None:
+            vim.command("let %s = '%s'" % (ret, type))
             vim.command("let s:documentation = '%s'" % documentation.replace("'", "''"))
 
 def renameTo():
@@ -166,7 +173,7 @@ def build():
     return quickfixes_from_js(js, 'QuickFixes')
 
 def buildcommand():
-    vim.command("let b:buildcommand = '%s'" % getResponse('/buildcommand')) 
+    vim.command("let b:buildcommand = '%s'" % getResponse('/buildcommand'))
 
 def getTestCommand():
     mode = vim.eval('a:mode')
@@ -175,7 +182,7 @@ def getTestCommand():
     response = json.loads(getResponse('/gettestcontext', parameters))
     testCommand = "let s:testcommand = '%(TestCommand)s'" % response
     vim.command(testCommand)
-		
+
 def codeFormat():
     parameters = {}
     parameters['ExpandTab'] = bool(int(vim.eval('&expandtab')))
@@ -216,12 +223,12 @@ def get_quickfix_list(js, key):
     if js != '':
         response = json.loads(js)
         return quickfixes_from_js(response, key)
-    return [];
+    return []
 
 def quickfixes_from_js(js, key):
     if js[key] is not None:
         return quickfixes_from_response(js[key])
-    return [];
+    return []
 
 def quickfixes_from_response(response):
     items = []
@@ -247,7 +254,7 @@ def lookupAllUserTypes():
     js = getResponse('/lookupalltypes')
     if js != '':
         response = json.loads(js)
-        if response != None:
+        if response is not None:
             vim.command("let s:allUserTypes = '%s'" % (response['Types']))
             vim.command("let s:allUserInterfaces = '%s'" % (response['Interfaces']))
 
