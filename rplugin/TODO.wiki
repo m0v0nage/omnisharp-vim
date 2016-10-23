@@ -5,21 +5,11 @@ This is a big project and I guess it will take many hours to complete and I need
 - [o] get OmniSharp-Roslyn to build on Arch Linux:
     - [X] Report to slack
     - [ ] Implement solution
-- [X] Setup Python env scripts
-- [X] Pylint setup:
-    - [X] support python3 only?
 - [.] Logging setup:
     - [X] Setup logging infrastructure
     - [ ] Setup logging to file
 - [.] Get a proper toolchain for .NET Core on Arch Linux:
-    - [O] Add a PKGBUILD for git version of the coreclr:
-        - [X] Write building function
-        - [X] Test building locally
-        - [X] Write a packaging function
-        - [X] Test packaging locally
-        - [ ] Test building in a clean CHROOT:
-            - the info is here: https://wiki.archlinux.org/index.php/DeveloperWiki:Building_in_a_Clean_Chroot
-        - [X] push to aur
+    - [X] Add a PKGBUILD for git version of the coreclr:
     - [ ] Add a PKGBUILD for git version of the corefx
         - [ ] Write building function
         - [ ] Test building locally
@@ -40,11 +30,25 @@ This is a big project and I guess it will take many hours to complete and I need
 - [ ] find_type
 - [ ] find_symbol
 - [ ] find_usages
-- [ ] Start server:
-    - [ ] Discover the solution files in the fs
+- [.] Start server:
+    - [X] Discover the solution files in the fs
     - [ ] Handle selection of solution files
     - [ ] setup communication via the restful interface, which is much easier to get started with.
     - [ ] setup communication via STDIO
+
+## Done
+
+- [X] Setup Python env scripts
+- [X] Pylint setup:
+    - [X] support python3 only?
+- [X] Add a PKGBUILD for git version of the coreclr:
+    - [X] Write building function
+    - [X] Test building locally
+    - [X] Write a packaging function
+    - [X] Test packaging locally
+    - [X] Test building in a clean CHROOT:
+        - the info is here: https://wiki.archlinux.org/index.php/DeveloperWiki:Building_in_a_Clean_Chroot
+    - [X] push to aur
 
 ## Functions from the old python file
 
