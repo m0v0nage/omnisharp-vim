@@ -6,16 +6,45 @@ This is a big project and I guess it will take many hours to complete and I need
     - [X] Report to slack
     - [ ] Implement solution
 - [X] Setup Python env scripts
-- [ ] Pylint setup:
-    - [ ] support python3 only?
-- [ ] Logging setup:
-    - [ ] Setup logging infrastructure
-- [ ] setup communication via STDIO
+- [X] Pylint setup:
+    - [X] support python3 only?
+- [.] Logging setup:
+    - [X] Setup logging infrastructure
+    - [ ] Setup logging to file
+- [.] Get a proper toolchain for .NET Core on Arch Linux:
+    - [O] Add a PKGBUILD for git version of the coreclr:
+        - [X] Write building function
+        - [X] Test building locally
+        - [X] Write a packaging function
+        - [X] Test packaging locally
+        - [ ] Test building in a clean CHROOT:
+            - the info is here: https://wiki.archlinux.org/index.php/DeveloperWiki:Building_in_a_Clean_Chroot
+        - [X] push to aur
+    - [ ] Add a PKGBUILD for git version of the corefx
+        - [ ] Write building function
+        - [ ] Test building locally
+        - [ ] Test building in a clean CHROOT
+        - [ ] Test packaging locally
+        - [ ] Write a packaging function
+        - [ ] push to aur
+    - [ ] Add a PKGBUILD for git version of the dotnet-cli
+        - [ ] Write building function
+        - [ ] Test building locally
+        - [ ] Test building in a clean CHROOT
+        - [ ] Test packaging locally
+        - [ ] Write a packaging function
+        - [ ] push to aur
+    - [ ] Help the project to setup a travis job, which would build the stuff using my PKGBUILDs
 - [ ] building
 - [ ] testing
 - [ ] find_type
 - [ ] find_symbol
 - [ ] find_usages
+- [ ] Start server:
+    - [ ] Discover the solution files in the fs
+    - [ ] Handle selection of solution files
+    - [ ] setup communication via the restful interface, which is much easier to get started with.
+    - [ ] setup communication via STDIO
 
 ## Functions from the old python file
 
@@ -36,19 +65,13 @@ This is a big project and I guess it will take many hours to complete and I need
 - [ ] renameTo
 - [ ] setBuffer
 - [ ] build
-- [ ] buildcommand
 - [ ] getTestCommand
 - [ ] codeFormat
-- [ ] fix_usings
 - [ ] addReference
 - [ ] findSyntaxErrors
 - [ ] findSemanticErrors
 - [ ] findTypes
 - [ ] findSymbols
-- [ ] get_quickfix_list
-- [ ] quickfixes_from_js
-- [ ] quickfixes_from_response
 - [ ] lookupAllUserTypes
 - [ ] navigateUp
 - [ ] navigateDown
-- [ ] get_navigate_response
