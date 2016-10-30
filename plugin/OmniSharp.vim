@@ -26,8 +26,8 @@ endif
 
 let s:py_path = join([expand('<sfile>:p:h:h'), 'python'], '/')
 exec s:pycmd "sys.path.append(r'" . s:py_path . "')"
-exec s:pyfile fnameescape(s:py_path . '/Completion.py')
-exec s:pyfile fnameescape(s:py_path . '/OmniSharp.py')
+exec s:pyfile fnameescape(s:py_path . '/completion.py')
+exec s:pyfile fnameescape(s:py_path . '/omnisharp.py')
 
 let g:OmniSharp_port = get(g:, 'OmniSharp_port', 2000)
 
