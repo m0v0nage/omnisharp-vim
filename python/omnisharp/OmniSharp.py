@@ -53,13 +53,16 @@ def getResponse(endPoint, additional_parameters=None, timeout=None):
 
     target = urlparse.urljoin(host, endPoint)
 
+    return make_request(target, parameters, timeout)
+
+def make_request(url, payload, timeout=None):
     proxy = request.ProxyHandler({})
     opener = request.build_opener(proxy)
-    req = request.Request(target)
+    req = request.Request(url)
     req.add_header('Content-Type', 'application/json')
 
     try:
-        response = opener.open(req, json.dumps(parameters), timeout)
+        response = opener.open(req, json.dumps(payload), timeout)
         vim.command("let g:serverSeenRunning = 1")
         res = response.read()
 
